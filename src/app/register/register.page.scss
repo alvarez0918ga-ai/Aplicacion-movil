@@ -1,0 +1,208 @@
+.register-content {
+  --background: var(--ion-color-FondoDD);
+}
+
+// Medida base: todo está en "em" y escala con esta línea
+.register-container {
+  font-size: clamp(14px, 2.2vmin + 12px, 24px);
+
+  width: min(100%, 26em);
+  min-height: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding-top: calc(env(safe-area-inset-top) + 1.5em);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 3em);
+  padding-left: calc(env(safe-area-inset-left) + 1.5em);
+  padding-right: calc(env(safe-area-inset-right) + 1.5em);
+}
+
+// ===== LOGO =====
+// Medidas tomadas de la imagen de referencia, en porcentaje del ancho
+// del formulario, así se ve igual de proporcionado en cualquier dispositivo.
+// La imagen tiene margen transparente; .logo-recorte es la "ventana" que
+// lo quita y .logo es la imagen agrandada dentro de esa ventana.
+//
+//   ANCHO del logo  -> width de .logo-recorte (el dibujo mide ~0.83 de ese valor)
+//                      80% = el logo ocupa ~66% del ancho del formulario
+//   SEPARACIÓN      -> margin-bottom de .logo-recorte (espacio hasta el formulario)
+//   .logo width     -> déjalo siempre en 200%
+.logo-recorte {
+  width: 80%;
+  aspect-ratio: 1.9 / 1;
+  margin: 0 auto 3.5em;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  flex-shrink: 0;
+  width: 200%;
+  max-width: none;
+  height: auto;
+}
+
+.etiqueta {
+  display: block;
+  font-size: 0.95em;
+  font-weight: 700;
+  color: var(--ion-color-GrisOscuroDD);
+  margin: 0 0 0.45em;
+}
+
+// Campo con esquinas redondeadas
+.campo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  background: var(--ion-color-BlancoDD);
+  border: 1.5px solid var(--ion-color-GrisClaroDD);
+  border-radius: 0.7em;
+  padding: 0 0.9em;
+  min-height: 3.2em;
+  margin-bottom: 1em;
+  transition: border-color 0.2s;
+
+  &:focus-within {
+    border-color: var(--ion-color-CelesteDD);
+  }
+
+  ion-input {
+    --background: transparent;
+    --color: var(--ion-color-GrisOscuroDD);
+    --placeholder-color: var(--ion-color-GrisClaroDD);
+    --placeholder-opacity: 1;
+    --padding-start: 0;
+    --padding-end: 0;
+    min-height: 0;
+    flex: 1;
+    font-size: 0.95em;
+  }
+
+  .icono {
+    color: var(--ion-color-GrisClaroDD);
+    font-size: 1.3em;
+    flex-shrink: 0;
+  }
+
+  .check {
+    color: var(--ion-color-VerdeDD);
+    font-size: 1.4em;
+    flex-shrink: 0;
+  }
+
+  .ojo {
+    color: var(--ion-color-GrisClaroDD);
+    font-size: 1.4em;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+}
+
+// El campo de contraseña tiene menos espacio abajo por el texto de ayuda
+.campo-pass {
+  margin-bottom: 0.5em;
+}
+
+.error {
+  display: block;
+  color: var(--ion-color-danger);
+  margin: -0.7em 0 0.9em 0.3em;
+  font-size: 0.8em;
+}
+
+// Texto de ayuda de la contraseña
+.ayuda {
+  margin: 0 0 1.4em;
+  font-size: 0.82em;
+  line-height: 1.4;
+  color: var(--ion-color-GrisClaroDD);
+
+  &.ayuda-error {
+    color: var(--ion-color-danger);
+  }
+}
+
+// Botón principal (el color viene de color="AzulDD")
+.btn-principal {
+  --border-radius: 0.7em;
+  --box-shadow: none;
+  min-height: 3.2em;
+  margin: 0;
+  font-size: 1em;
+  font-weight: 700;
+  text-transform: none;
+}
+
+// Separador
+.separador {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  margin: 1.4em 0;
+  color: var(--ion-color-GrisClaroDD);
+  font-size: 0.85em;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+  }
+}
+
+// Botón Google
+.btn-google {
+  --background: var(--ion-color-BlancoDD);
+  --background-activated: #f1f5f9;
+  --background-hover: var(--ion-color-FondoDD);
+  --color: var(--ion-color-GrisOscuroDD);
+  --border-radius: 0.7em;
+  --border-width: 1px;
+  --border-style: solid;
+  --border-color: var(--ion-color-GrisClaroDD);
+  --box-shadow: none;
+  min-height: 3.2em;
+  margin: 0;
+  font-size: 0.95em;
+  font-weight: 700;
+  text-transform: none;
+
+  .g-icon {
+    width: 1.3em;
+    height: 1.3em;
+    margin-right: 0.7em;
+  }
+}
+
+// Enlace al login
+.login-link {
+  text-align: center;
+  font-size: 0.9em;
+  color: var(--ion-color-GrisOscuroDD);
+  margin: 1.4em 0 0;
+
+  a {
+    font-weight: 700;
+    text-decoration: underline;
+    color: var(--ion-color-AzulDD);
+    cursor: pointer;
+  }
+}
+
+// Celular en horizontal o pantalla muy baja
+@media (max-height: 560px) {
+  .register-container {
+    justify-content: flex-start;
+  }
+  .logo-recorte {
+    width: 50%;
+    margin-bottom: 1em;
+  }
+}

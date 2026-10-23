@@ -1,0 +1,131 @@
+.bienvenida-content {
+  --background: var(--ion-color-FondoDD);
+}
+
+// Medida base: todo está en "em" y escala con esta línea
+.pantalla {
+  font-size: clamp(14px, 2.2vmin + 8px, 22px);
+
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+// Hexágonos suaves (color CelesteDD), visibles en los bordes y
+// desvanecidos hacia el centro, como en la imagen de referencia
+.fondo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='%233B82F6' stroke-width='1'/%3E%3Cpath d='M28 0L28 34L0 50L0 84L28 100L56 84L56 50L28 34' fill='none' stroke='%233B82F6' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 3.5em 6.25em;
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    transparent 30%,
+    #000 90%
+  );
+  mask-image: radial-gradient(ellipse at center, transparent 30%, #000 90%);
+}
+
+.contenido {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  width: min(100%, 26em);
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  padding-top: calc(env(safe-area-inset-top) + 1.5em);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 2em);
+  padding-left: calc(env(safe-area-inset-left) + 1.5em);
+  padding-right: calc(env(safe-area-inset-right) + 1.5em);
+}
+
+// Logo + textos centrados, ocupan el espacio disponible
+.centro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+// ===== LOGO =====
+// Tu imagen tiene margen transparente (el dibujo ocupa ~40% del ancho).
+// .logo-recorte es la "ventana" que se ve, y .logo es la imagen agrandada
+// para que el dibujo llene esa ventana.
+//
+// Para cambiar el tamaño del logo, modifica SOLO estos dos números
+// manteniendo la proporción:
+//   .logo-recorte width  -> ancho visible (16em)
+//   .logo width          -> 2.2 veces el ancho del recorte (35em)
+.logo-recorte {
+  width: 16em;
+  height: 9.5em;
+  max-width: 100%;
+  margin-bottom: 1em;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  flex-shrink: 0;
+  width: 35em;
+  max-width: none;
+  height: auto;
+}
+
+.nombre {
+  margin: 0 0 0.5em;
+  font-size: 2.3em;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--ion-color-AzulDD);
+}
+
+.lema {
+  margin: 0;
+  max-width: 11em;
+  font-size: 1.4em;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ion-color-GrisOscuroDD);
+}
+
+// Botón (el color viene de color="AzulDD")
+.btn-comenzar {
+  --border-radius: 2em;
+  --box-shadow: none;
+  min-height: 3.2em;
+  margin: 0;
+  font-size: 1em;
+  font-weight: 700;
+  text-transform: none;
+}
+
+// Celular en horizontal o pantalla muy baja
+@media (max-height: 560px) {
+  .logo-recorte {
+    width: 9em;
+    height: 5.4em;
+    margin-bottom: 0.5em;
+  }
+  .logo {
+    width: 19.8em;
+  }
+  .nombre {
+    font-size: 1.8em;
+  }
+  .lema {
+    font-size: 1.1em;
+  }
+}

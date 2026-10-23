@@ -1,0 +1,49 @@
+<ion-content [fullscreen]="true" class="home-content">
+  <div class="home-container">
+
+    <!-- Cabecera superior: Saludo, Fecha, Avatar y Notificación -->
+    <div class="encabezado-superior">
+      <div class="saludo-info">
+        <h1 class="titulo-hola">¡Hola, Usuario!</h1>
+        <p class="fecha-actual">Lunes, 12 de Octubre</p>
+      </div>
+      <div class="acciones-header">
+        <ion-avatar class="avatar-usuario">
+          <img alt="Avatar" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+        <ion-button fill="clear" color="dark" class="btn-notif">
+          <ion-icon name="notifications-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Título de sección -->
+    <h2 class="seccion-titulo">Próximo medicamento</h2>
+
+    <!-- Tarjeta vacía: Sin medicamentos -->
+    <section class="tarjeta tarjeta-vacia">
+      <div class="contenido-vacio">
+        <ion-icon name="medical-outline" class="icono-vacio"></ion-icon>
+        <p class="titulo-vacio">Sin medicamentos</p>
+        <span class="sub-vacio">No tienes medicamentos programados para el momento.</span>
+      </div>
+    </section>
+
+  </div>
+</ion-content>
+
+<!-- Barra de navegación inferior -->
+<ion-footer class="ion-no-border">
+  <nav class="nav">
+    <button
+      type="button"
+      class="nav-item"
+      *ngFor="let t of tabs"
+      [class.activo]="tabActivo === t.id"
+      (click)="irA(t.id)"
+    >
+      <ion-icon [name]="t.icono"></ion-icon>
+      <span>{{ t.etiqueta }}</span>
+    </button>
+  </nav>
+</ion-footer>

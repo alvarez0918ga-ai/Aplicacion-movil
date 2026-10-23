@@ -1,0 +1,143 @@
+.home-content {
+  --background: #ffffff;
+}
+
+.home-container {
+  font-size: clamp(14px, 2.2vmin + 8px, 22px);
+  width: min(100%, 30em);
+  min-height: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding-top: calc(env(safe-area-inset-top) + 1.2em);
+  padding-bottom: 1.5em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+}
+
+// Cabecera superior
+.encabezado-superior {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2em;
+
+  .saludo-info {
+    .titulo-hola {
+      font-size: 1.4em;
+      font-weight: 800;
+      color: #0d2322;
+      margin: 0 0 0.15em 0;
+    }
+    .fecha-actual {
+      font-size: 0.85em;
+      color: #64748b;
+      margin: 0;
+      font-weight: 500;
+    }
+  }
+
+  .acciones-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+
+    .avatar-usuario {
+      width: 2.5em;
+      height: 2.5em;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid #cbd5e1;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .btn-notif {
+      --color: #0d2322;
+      font-size: 1.2em;
+    }
+  }
+}
+
+// Título de sección
+.seccion-titulo {
+  font-size: 1.1em;
+  font-weight: 700;
+  color: #0d4745;
+  text-align: center;
+  margin: 0 0 1em 0;
+}
+
+// Tarjeta vacía: Sin medicamentos
+.tarjeta-vacia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 22em;
+  border: 1.5px dashed #cbd5e1;
+  background: #ffffff;
+  border-radius: 1.2em;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  padding: 1.5em;
+  box-sizing: border-box;
+
+  .contenido-vacio {
+    .icono-vacio {
+      font-size: 3.5em;
+      color: #94a3b8;
+      margin-bottom: 0.4em;
+    }
+
+    .titulo-vacio {
+      margin: 0 0 0.3em 0;
+      font-size: 1.2em;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .sub-vacio {
+      font-size: 0.85em;
+      color: #64748b;
+      line-height: 1.4;
+    }
+  }
+}
+
+// Barra de navegación inferior
+.nav {
+  font-size: clamp(12px, 1.6vmin + 6px, 18px);
+  display: flex;
+  justify-content: space-around;
+  background: #ffffff;
+  border-top: 1px solid #f1f5f9;
+  padding: 0.5em 0.3em calc(env(safe-area-inset-bottom) + 0.5em);
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2em;
+  padding: 0.3em 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+
+  ion-icon {
+    font-size: 1.6em;
+  }
+
+  span {
+    font-size: 0.75em;
+    font-weight: 600;
+  }
+
+  &.activo {
+    color: #0d9488;
+  }
+}

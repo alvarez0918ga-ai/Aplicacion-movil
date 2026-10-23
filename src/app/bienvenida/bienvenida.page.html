@@ -1,0 +1,31 @@
+<ion-content class="bienvenida-content" [fullscreen]="true">
+  <div class="pantalla">
+
+    <!-- Fondo de hexágonos suaves -->
+    <div class="fondo"></div>
+
+    <div class="contenido">
+
+      <!-- Logo, nombre y lema -->
+      <div class="centro">
+        <!-- El recorte quita el margen transparente de la imagen -->
+        <div class="logo-recorte">
+          <img class="logo" src="assets/img/logo.png" alt="Logo de la aplicación" />
+        </div>
+        <h1 class="nombre">{{ nombreApp }}</h1>
+        <p class="lema">{{ lema }}</p>
+      </div>
+
+      <!-- Botón -->
+      <ion-button
+        expand="block"
+        class="btn-comenzar"
+        color="AzulDD"
+        (click)="comenzar()"
+      >
+        Comenzar
+      </ion-button>
+
+    </div>
+  </div>
+</ion-content>

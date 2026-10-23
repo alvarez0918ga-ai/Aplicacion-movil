@@ -1,0 +1,125 @@
+/* ===== Paleta MediLink (nombre del color + DD) =====
+   PEGAR AL FINAL de src/theme/variables.scss
+   (si tenias el bloque ":root { --mc-azul ... }", borralo) */
+
+:root {
+  /* AzulDD · #1E3A8A · Azul principal */
+  --ion-color-AzulDD: #1E3A8A;
+  --ion-color-AzulDD-rgb: 30, 58, 138;
+  --ion-color-AzulDD-contrast: #ffffff;
+  --ion-color-AzulDD-contrast-rgb: 255, 255, 255;
+  --ion-color-AzulDD-shade: #1a3379;
+  --ion-color-AzulDD-tint: #354e96;
+
+  /* CelesteDD · #3B82F6 · Azul claro / interactivo */
+  --ion-color-CelesteDD: #3B82F6;
+  --ion-color-CelesteDD-rgb: 59, 130, 246;
+  --ion-color-CelesteDD-contrast: #ffffff;
+  --ion-color-CelesteDD-contrast-rgb: 255, 255, 255;
+  --ion-color-CelesteDD-shade: #3472d8;
+  --ion-color-CelesteDD-tint: #4f8ff7;
+
+  /* VerdeDD · #10B981 · Verde salud */
+  --ion-color-VerdeDD: #10B981;
+  --ion-color-VerdeDD-rgb: 16, 185, 129;
+  --ion-color-VerdeDD-contrast: #ffffff;
+  --ion-color-VerdeDD-contrast-rgb: 255, 255, 255;
+  --ion-color-VerdeDD-shade: #0ea372;
+  --ion-color-VerdeDD-tint: #28c08e;
+
+  /* FondoDD · #F8FAFC · Fondo general */
+  --ion-color-FondoDD: #F8FAFC;
+  --ion-color-FondoDD-rgb: 248, 250, 252;
+  --ion-color-FondoDD-contrast: #334155;
+  --ion-color-FondoDD-contrast-rgb: 51, 65, 85;
+  --ion-color-FondoDD-shade: #dadcde;
+  --ion-color-FondoDD-tint: #f9fbfc;
+
+  /* GrisOscuroDD · #334155 · Texto principal */
+  --ion-color-GrisOscuroDD: #334155;
+  --ion-color-GrisOscuroDD-rgb: 51, 65, 85;
+  --ion-color-GrisOscuroDD-contrast: #ffffff;
+  --ion-color-GrisOscuroDD-contrast-rgb: 255, 255, 255;
+  --ion-color-GrisOscuroDD-shade: #2d394b;
+  --ion-color-GrisOscuroDD-tint: #475466;
+
+  /* GrisClaroDD · #94A3B8 · Bordes inactivos */
+  --ion-color-GrisClaroDD: #94A3B8;
+  --ion-color-GrisClaroDD-rgb: 148, 163, 184;
+  --ion-color-GrisClaroDD-contrast: #000000;
+  --ion-color-GrisClaroDD-contrast-rgb: 0, 0, 0;
+  --ion-color-GrisClaroDD-shade: #828fa2;
+  --ion-color-GrisClaroDD-tint: #9facbf;
+
+  /* BlancoDD · #FFFFFF · Campos y botones */
+  --ion-color-BlancoDD: #FFFFFF;
+  --ion-color-BlancoDD-rgb: 255, 255, 255;
+  --ion-color-BlancoDD-contrast: #334155;
+  --ion-color-BlancoDD-contrast-rgb: 51, 65, 85;
+  --ion-color-BlancoDD-shade: #e0e0e0;
+  --ion-color-BlancoDD-tint: #ffffff;
+}
+
+/* ===== Clases puente: permiten usar color="AzulDD" en componentes Ionic ===== */
+.ion-color-AzulDD {
+  --ion-color-base: var(--ion-color-AzulDD);
+  --ion-color-base-rgb: var(--ion-color-AzulDD-rgb);
+  --ion-color-contrast: var(--ion-color-AzulDD-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-AzulDD-contrast-rgb);
+  --ion-color-shade: var(--ion-color-AzulDD-shade);
+  --ion-color-tint: var(--ion-color-AzulDD-tint);
+}
+
+.ion-color-CelesteDD {
+  --ion-color-base: var(--ion-color-CelesteDD);
+  --ion-color-base-rgb: var(--ion-color-CelesteDD-rgb);
+  --ion-color-contrast: var(--ion-color-CelesteDD-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-CelesteDD-contrast-rgb);
+  --ion-color-shade: var(--ion-color-CelesteDD-shade);
+  --ion-color-tint: var(--ion-color-CelesteDD-tint);
+}
+
+.ion-color-VerdeDD {
+  --ion-color-base: var(--ion-color-VerdeDD);
+  --ion-color-base-rgb: var(--ion-color-VerdeDD-rgb);
+  --ion-color-contrast: var(--ion-color-VerdeDD-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-VerdeDD-contrast-rgb);
+  --ion-color-shade: var(--ion-color-VerdeDD-shade);
+  --ion-color-tint: var(--ion-color-VerdeDD-tint);
+}
+
+.ion-color-FondoDD {
+  --ion-color-base: var(--ion-color-FondoDD);
+  --ion-color-base-rgb: var(--ion-color-FondoDD-rgb);
+  --ion-color-contrast: var(--ion-color-FondoDD-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-FondoDD-contrast-rgb);
+  --ion-color-shade: var(--ion-color-FondoDD-shade);
+  --ion-color-tint: var(--ion-color-FondoDD-tint);
+}
+
+.ion-color-GrisOscuroDD {
+  --ion-color-base: var(--ion-color-GrisOscuroDD);
+  --ion-color-base-rgb: var(--ion-color-GrisOscuroDD-rgb);
+  --ion-color-contrast: var(--ion-color-GrisOscuroDD-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-GrisOscuroDD-contrast-rgb);
+  --ion-color-shade: var(--ion-color-GrisOscuroDD-shade);
+  --ion-color-tint: var(--ion-color-GrisOscuroDD-tint);
+}
+
+.ion-color-GrisClaroDD {
+  --ion-color-base: var(--ion-color-GrisClaroDD);
+  --ion-color-base-rgb: var(--ion-color-GrisClaroDD-rgb);
+  --ion-color-contrast: var(--ion-color-GrisClaroDD-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-GrisClaroDD-contrast-rgb);
+  --ion-color-shade: var(--ion-color-GrisClaroDD-shade);
+  --ion-color-tint: var(--ion-color-GrisClaroDD-tint);
+}
+
+.ion-color-BlancoDD {
+  --ion-color-base: var(--ion-color-BlancoDD);
+  --ion-color-base-rgb: var(--ion-color-BlancoDD-rgb);
+  --ion-color-contrast: var(--ion-color-BlancoDD-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-BlancoDD-contrast-rgb);
+  --ion-color-shade: var(--ion-color-BlancoDD-shade);
+  --ion-color-tint: var(--ion-color-BlancoDD-tint);
+}
