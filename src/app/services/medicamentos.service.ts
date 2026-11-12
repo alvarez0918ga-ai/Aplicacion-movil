@@ -121,6 +121,8 @@ export class MedicamentosService {
         }
       }
 
+
+  //emanuelputoo//
       return lista;
     } catch {
       return [...this.medicamentosPorDefecto];
