@@ -1,14 +1,12 @@
-<ion-content class="perfil-content" [fullscreen]="true">
-
-  <!-- Cabecera Azul -->
-  <header class="header-azul">
+<ion-header class="ion-no-border header-azul">
+  <div class="header-titulos">
     <h1 class="header-titulo">Perfil</h1>
-  </header>
+  </div>
+</ion-header>
 
-  <!-- Contenido -->
-  <div class="perfil-container">
+<ion-content class="perfil-content" [fullscreen]="true">
+  <div class="contenedor-principal">
 
-    <!-- Avatar + nombre + correo -->
     <div class="avatar-seccion">
       <div class="avatar-circulo">
         <ion-icon name="person-outline" class="avatar-icono"></ion-icon>
@@ -17,123 +15,94 @@
       <p class="usuario-correo">{{ usuario.correo }}</p>
     </div>
 
-    <!-- Sonido de las notificaciones -->
     <p class="seccion-label">Sonido de recordatorios</p>
-    <div class="card-datos">
-      <ion-item lines="none">
-        <ion-icon name="volume-high-outline" slot="start" color="primary"></ion-icon>
-        <ion-select
-          label="Tono de alerta"
-          labelPlacement="stacked"
-          [(ngModel)]="tonoSeleccionado"
-          (ionChange)="alCambiarTono($event.detail.value)"
-        >
-          <ion-select-option *ngFor="let t of tonosDisponibles" [value]="t.id">
-            {{ t.nombre }}
-          </ion-select-option>
-          <ion-select-option *ngIf="audioPersonalizadoNombre" value="personalizado">
-            Importado: {{ audioPersonalizadoNombre }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
+    <ion-card class="card-datos">
+      <ion-list lines="full">
+        <ion-item>
+          <ion-icon name="volume-high-outline" slot="start" color="primary"></ion-icon>
+          <ion-select
+            label="Tono de alerta"
+            labelPlacement="stacked"
+            [(ngModel)]="tonoSeleccionado"
+            (ionChange)="alCambiarTono($event.detail.value)"
+          >
+            <ion-select-option *ngFor="let t of tonosDisponibles" [value]="t.id">
+              {{ t.nombre }}
+            </ion-select-option>
+            <ion-select-option *ngIf="audioPersonalizadoNombre" value="personalizado">
+              Importado: {{ audioPersonalizadoNombre }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
 
-      <div class="separador"></div>
+        <ion-item lines="none">
+          <ion-button fill="outline" size="small" (click)="probarTonoActual()">
+            <ion-icon slot="start" name="play-outline"></ion-icon>
+            Escuchar tono
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card>
 
-      <!-- Fila para probar o importar -->
-      <div class="fila-dato" style="padding-top: 10px; padding-bottom: 10px;">
-        <button type="button" class="btn-sonido-accion" (click)="probarTonoActual()">
-          <ion-icon name="play-outline"></ion-icon>
-          <span>Escuchar tono</span>
-        </button>
-
-        <label class="btn-sonido-accion btn-importar">
-          <ion-icon name="cloud-upload-outline"></ion-icon>
-          <span>Importar audio</span>
-          <input type="file" accept="audio/*" (change)="importarAudio($event)" style="display: none;" />
-        </label>
-      </div>
-    </div>
-
-    <!-- Datos del usuario -->
     <p class="seccion-label">Datos del usuario</p>
-    <div class="card-datos">
+    <ion-card class="card-datos">
+      <ion-list lines="full">
+        <ion-item>
+          <ion-label color="medium">Nombre</ion-label>
+          <ion-note slot="end">{{ usuario.nombre }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label color="medium">Correo</ion-label>
+          <ion-note slot="end">{{ usuario.correo }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label color="medium">Teléfono</ion-label>
+          <ion-note slot="end">{{ usuario.telefono }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label color="medium">Fecha de nacimiento</ion-label>
+          <ion-note slot="end">{{ usuario.fechaNacimiento }}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label color="medium">Edad</ion-label>
+          <ion-note slot="end">{{ usuario.edad }}</ion-note>
+        </ion-item>
+      </ion-list>
+    </ion-card>
 
-      <div class="fila-dato">
-        <span class="dato-clave">Nombre</span>
-        <span class="dato-valor">{{ usuario.nombre }}</span>
-      </div>
-      <div class="separador"></div>
 
-      <div class="fila-dato">
-        <span class="dato-clave">Correo</span>
-        <span class="dato-valor">{{ usuario.correo }}</span>
-      </div>
-      <div class="separador"></div>
-
-      <div class="fila-dato">
-        <span class="dato-clave">Teléfono</span>
-        <span class="dato-valor">{{ usuario.telefono }}</span>
-      </div>
-      <div class="separador"></div>
-
-      <div class="fila-dato">
-        <span class="dato-clave">Fecha de nacimiento</span>
-        <span class="dato-valor">{{ usuario.fechaNacimiento }}</span>
-      </div>
-      <div class="separador"></div>
-
-      <div class="fila-dato">
-        <span class="dato-clave">Edad</span>
-        <span class="dato-valor">{{ usuario.edad }}</span>
-      </div>
-
-    </div>
-
-    <!-- Contacto de emergencia -->
     <p class="seccion-label">Contacto de emergencia</p>
-    <div class="card-datos">
+    <ion-card class="card-datos">
+      <ion-list lines="full">
+        <ion-item>
+          <ion-label color="medium">Nombre</ion-label>
+          <ion-note slot="end">{{ contactoEmergencia.nombre }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label color="medium">Parentesco</ion-label>
+          <ion-note slot="end">{{ contactoEmergencia.parentesco }}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label color="medium">Teléfono</ion-label>
+          <ion-note slot="end">{{ contactoEmergencia.telefono }}</ion-note>
+        </ion-item>
+      </ion-list>
+    </ion-card>
 
-      <div class="fila-dato">
-        <span class="dato-clave">Nombre</span>
-        <span class="dato-valor">{{ contactoEmergencia.nombre }}</span>
-      </div>
-      <div class="separador"></div>
 
-      <div class="fila-dato">
-        <span class="dato-clave">Parentesco</span>
-        <span class="dato-valor">{{ contactoEmergencia.parentesco }}</span>
-      </div>
-      <div class="separador"></div>
-
-      <div class="fila-dato">
-        <span class="dato-clave">Teléfono</span>
-        <span class="dato-valor">{{ contactoEmergencia.telefono }}</span>
-      </div>
-
-    </div>
-
-    <!-- Botón Cerrar sesión -->
-    <button type="button" class="btn-cerrar-sesion" (click)="cerrarSesion()">
+    <ion-button
+      expand="block"
+      fill="outline"
+      color="danger"
+      class="btn-cerrar-sesion"
+      (click)="cerrarSesion()"
+    >
+      <ion-icon slot="start" name="log-out-outline"></ion-icon>
       Cerrar sesión
-    </button>
+    </ion-button>
 
   </div>
 </ion-content>
 
-<!-- Barra de navegación inferior -->
-<ion-footer class="ion-no-border footer-nav">
-  <nav class="nav">
-    <button
-      type="button"
-      class="nav-item"
-      *ngFor="let t of tabs"
-      [class.activo]="tabActivo === t.id"
-      [class.item-destacado]="t.tipo === 'robot'"
-      (click)="irA(t.id)"
-    >
-      <ion-icon [name]="t.icono || 'ellipse-outline'"></ion-icon>
-      <span class="nav-etiqueta">{{ t.etiqueta }}</span>
-    </button>
-  </nav>
-  <div class="home-bar-indicator"></div>
-</ion-footer>
+<!-- Barra de navegación inferior compartida -->
+<app-bottom-nav [tabActivo]="tabActivo"></app-bottom-nav>

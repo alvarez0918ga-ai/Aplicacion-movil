@@ -21,7 +21,6 @@ export class CamaraPage {
 
   constructor(private router: Router) { }
 
-  // 1. Abre la cámara directamente para tomar o escanear foto usando Base64
   async escanearMedicamento() {
     try {
       const image = await Camera.getPhoto({
@@ -37,7 +36,6 @@ export class CamaraPage {
     }
   }
 
-  // 2. Abre la galería del dispositivo para seleccionar foto usando Base64
   async subirDesdeGaleria() {
     try {
       const image = await Camera.getPhoto({
@@ -53,12 +51,12 @@ export class CamaraPage {
     }
   }
 
-  // Elimina la foto seleccionada
+
   eliminarFoto() {
     this.imagenUrl = undefined;
   }
 
-  // Guarda el medicamento y vuelve a Home
+  
   guardarMedicamento() {
     if (!this.medicamento.nombre.trim()) {
       alert('Por favor ingresa el nombre del medicamento');

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular/lazy';
 import { MedicamentosPageRoutingModule } from './medicamentos-routing.module';
 import { MedicamentosPage } from './medicamentos.page';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   imports: [
@@ -11,9 +12,9 @@ import { MedicamentosPage } from './medicamentos.page';
     FormsModule,
     IonicModule,
     MedicamentosPageRoutingModule,
+    ComponentsModule,
   ],
   declarations: [MedicamentosPage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class MedicamentosPageModule { }
-

@@ -7,8 +7,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding registro-content">
-  <form (ngSubmit)="guardarMedicamento()">
+<ion-content class="registro-content">
+  <div class="contenedor-principal">
+    <form (ngSubmit)="guardarMedicamento()">
     <ion-card class="form-card">
       <ion-card-header>
         <ion-card-title>Datos del Medicamento</ion-card-title>
@@ -17,7 +18,6 @@
 
       <ion-card-content>
         <ion-list lines="inset">
-          <!-- 1. Nombre -->
           <ion-item>
             <ion-input
               label="Nombre del medicamento *"
@@ -29,7 +29,6 @@
             ></ion-input>
           </ion-item>
 
-          <!-- 2. Tipo de medicamento -->
           <ion-item>
             <ion-select
               label="Tipo de medicamento *"
@@ -45,7 +44,6 @@
             </ion-select>
           </ion-item>
 
-          <!-- Si eligen 'Otro' -->
           <ion-item *ngIf="medicamento.tipo === 'Otro'">
             <ion-input
               label="Especifica el tipo"
@@ -56,7 +54,6 @@
             ></ion-input>
           </ion-item>
 
-          <!-- 3. Dosis -->
           <ion-item>
             <ion-input
               label="Dosis"
@@ -67,7 +64,6 @@
             ></ion-input>
           </ion-item>
 
-          <!-- 4. Fecha de inicio -->
           <ion-item>
             <ion-input
               type="date"
@@ -79,7 +75,6 @@
             ></ion-input>
           </ion-item>
 
-          <!-- 5. Hora de toma -->
           <ion-item>
             <ion-input
               type="time"
@@ -92,7 +87,6 @@
             ></ion-input>
           </ion-item>
 
-          <!-- 6. Frecuencia -->
           <ion-item>
             <ion-select
               label="Frecuencia del medicamento *"
@@ -108,7 +102,7 @@
             </ion-select>
           </ion-item>
 
-          <!-- 7. Duración -->
+
           <ion-item>
             <ion-input
               label="Duración del tratamiento"
@@ -119,7 +113,6 @@
             ></ion-input>
           </ion-item>
 
-          <!-- 8. Cantidad inicial -->
           <ion-item>
             <ion-input
               type="number"
@@ -134,7 +127,7 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Card de información de notificaciones automáticas calculadas -->
+
     <ion-card *ngIf="frecuenciaHorasSeleccionada && medicamento.horaInicio" color="light" class="info-card">
       <ion-card-header>
         <ion-card-title class="titulo-notif">
@@ -158,7 +151,6 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Card de Foto del Medicamento (Base64) -->
     <ion-card class="foto-card">
       <ion-card-header>
         <ion-card-title style="font-size: 15px;">Foto del medicamento (opcional)</ion-card-title>
@@ -194,10 +186,11 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Botón Principal Guardar -->
+
     <ion-button expand="block" type="submit" size="large" color="primary" class="btn-guardar">
       <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
       Guardar Medicamento y Activar Alertas
     </ion-button>
   </form>
+  </div>
 </ion-content>

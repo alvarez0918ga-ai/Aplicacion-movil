@@ -63,10 +63,7 @@ export class PerfilPage implements OnInit {
 
   cargarConfiguracionSonido() {
     this.tonoSeleccionado = this.sonidosService.obtenerTonoActual();
-    const custom = this.sonidosService.obtenerAudioPersonalizado();
-    if (custom) {
-      this.audioPersonalizadoNombre = custom.nombre;
-    }
+  
   }
 
   alCambiarTono(nuevoTono: any) {
@@ -93,7 +90,6 @@ export class PerfilPage implements OnInit {
     const reader = new FileReader();
     reader.onload = () => {
       const base64 = reader.result as string;
-      this.sonidosService.guardarAudioPersonalizado(file.name, base64);
       this.audioPersonalizadoNombre = file.name;
       this.tonoSeleccionado = 'personalizado';
       this.sonidosService.reproducirTono('personalizado');

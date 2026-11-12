@@ -1,14 +1,14 @@
 <ion-content class="login-content" [fullscreen]="true">
-  <div class="login-container">
+  <div class="auth-container login-container">
 
-    <!-- Logo -->
+    <!-- Logo de la aplicación -->
     <div class="logo-recorte">
-      <img class="logo" src="assets/img/logo.png" alt="Logo de la aplicación" />
+      <img class="logo" src="assets/img/logo.png" alt="Logo de DoxiDetect" />
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="iniciarSesion()">
 
-      <!-- Correo -->
+      <!-- Correo electrónico -->
       <label class="etiqueta">Correo electrónico</label>
       <div class="campo-wrap">
         <ion-icon name="mail" class="icono"></ion-icon>
@@ -62,7 +62,7 @@
     <!-- Separador -->
     <div class="separador"><span>o continúa con</span></div>
 
-    <!-- Google -->
+    <!-- Botón Google -->
     <ion-button
       expand="block"
       type="button"
@@ -78,7 +78,7 @@
       Continuar con Google
     </ion-button>
 
-    <!-- Registro -->
+    <!-- Enlace a Registro -->
     <p class="registro">
       ¿No tienes una cuenta?
       <a (click)="irARegistro()">Regístrate</a>

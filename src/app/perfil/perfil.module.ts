@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular/lazy';
 import { PerfilPageRoutingModule } from './perfil-routing.module';
 import { PerfilPage } from './perfil.page';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   imports: [
@@ -11,6 +12,7 @@ import { PerfilPage } from './perfil.page';
     FormsModule,
     IonicModule,
     PerfilPageRoutingModule,
+    ComponentsModule,
   ],
   declarations: [PerfilPage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

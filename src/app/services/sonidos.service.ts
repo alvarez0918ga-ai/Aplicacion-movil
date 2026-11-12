@@ -10,17 +10,15 @@ export interface InfoAudioPersonalizado {
 })
 export class SonidosService {
   private readonly SONIDO_KEY = 'doxidetect_tono_notificacion';
-  private readonly AUDIO_CUSTOM_KEY = 'doxidetect_audio_personalizado';
 
-  // Tonos predeterminados disponibles
   tonosDisponibles = [
-    { id: 'campana', nombre: 'Campana suave (Chime)' },
-    { id: 'alarma', nombre: 'Alarma médica (Beep)' },
+    { id: 'campana', nombre: 'Campana suave' },
+    { id: 'alarma', nombre: 'Alarma médica' },
     { id: 'digital', nombre: 'Tono digital' },
     { id: 'silencio', nombre: 'Solo vibración (Silencioso)' },
   ];
 
-  // Obtiene el tono guardado (o 'campana' por defecto)
+
   obtenerTonoActual(): string {
     return localStorage.getItem(this.SONIDO_KEY) || 'campana';
   }
@@ -29,23 +27,7 @@ export class SonidosService {
     localStorage.setItem(this.SONIDO_KEY, tonoId);
   }
 
-  // Guarda un archivo de audio importado en Base64
-  guardarAudioPersonalizado(nombre: string, base64: string): void {
-    const obj: InfoAudioPersonalizado = { nombre, data: base64 };
-    localStorage.setItem(this.AUDIO_CUSTOM_KEY, JSON.stringify(obj));
-    this.guardarTono('personalizado');
-  }
 
-  obtenerAudioPersonalizado(): InfoAudioPersonalizado | null {
-    try {
-      const guardado = localStorage.getItem(this.AUDIO_CUSTOM_KEY);
-      return guardado ? JSON.parse(guardado) : null;
-    } catch {
-      return null;
-    }
-  }
-
-  // Reproduce el tono actual o el especificado
   reproducirTono(tipo?: string): void {
     const tono = tipo || this.obtenerTonoActual();
 
@@ -53,17 +35,7 @@ export class SonidosService {
       return;
     }
 
-    // Si es un audio personalizado subido por el usuario
-    if (tono === 'personalizado') {
-      const custom = this.obtenerAudioPersonalizado();
-      if (custom?.data) {
-        const audio = new Audio(custom.data);
-        audio.play().catch((err) => console.warn('Error al reproducir audio personalizado:', err));
-        return;
-      }
-    }
 
-    // Tono sintetizado nativo mediante Web Audio API (compatible en todos los dispositivos)
     this.reproducirSintetizado(tono);
   }
 

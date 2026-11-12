@@ -33,18 +33,15 @@ export class NotificacionesService {
         console.log('Notificación recibida:', notification);
         this.sonidosService.reproducirTono();
       });
-    } catch {}
+    } catch { }
   }
 
-  /**
-   * Crea el canal de notificación con máxima prioridad en Android (sonido, vibración, luces)
-   */
+
   async inicializarCanal(): Promise<void> {
     try {
-      // Eliminar el canal anterior que pudo quedar sin sonido en el sistema
       try {
         await LocalNotifications.deleteChannel({ id: 'recordatorios_medicamentos' });
-      } catch {}
+      } catch { }
 
       await LocalNotifications.createChannel({
         id: this.CANAL_ID,
@@ -59,13 +56,9 @@ export class NotificacionesService {
       });
       this.canalInicializado = true;
     } catch {
-      // Ignorar en navegadores web donde createChannel no aplica
     }
   }
 
-  /**
-   * Solicita o comprueba permisos de notificación tanto en móvil como en navegador web
-   */
   async solicitarPermisos(): Promise<boolean> {
     try {
       // 1. En entorno de navegador Web (Desktop / Chrome / Edge)
@@ -73,11 +66,10 @@ export class NotificacionesService {
         if (Notification.permission === 'default') {
           try {
             await Notification.requestPermission();
-          } catch {}
+          } catch { }
         }
       }
 
-      // 2. En entorno Capacitor (Android / iOS)
       try {
         const estadoActual = await LocalNotifications.checkPermissions();
         if (estadoActual.display === 'granted') {
@@ -95,12 +87,7 @@ export class NotificacionesService {
     }
   }
 
-  /**
-   * Programa las notificaciones automáticas:
-   * 1. Notificación 10 minutos antes de la toma.
-   * 2. Notificación al momento exacto de la toma.
-   * Calculadas a partir de la fecha de inicio, hora de toma y la frecuencia en horas (3, 4, 6, 8, 12 o 24).
-   */
+
   async programarNotificacionesMedicamento(
     med: Medicamento,
     frecuenciaHoras: number,
@@ -112,10 +99,9 @@ export class NotificacionesService {
       await this.inicializarCanal();
     }
 
-    // Cancelar recordatorios previos de este medicamento para evitar duplicados
     await this.cancelarNotificacionesMedicamento(med.id);
 
-    // Calcular las tomas según horaInicio y frecuenciaHoras
+
     const fechasTomas = this.calcularHorariosTomas(
       med.fechaInicio,
       med.horaInicio || '08:00',
@@ -227,7 +213,7 @@ export class NotificacionesService {
           notifications: pendientes.notifications.map((n) => ({ id: n.id })),
         });
       }
-    } catch {}
+    } catch { }
   }
 
   /**
@@ -272,7 +258,7 @@ export class NotificacionesService {
             body: '¡Notificación de prueba exitosa! El sonido y las alertas están activos.',
             icon: 'assets/icon/favicon.png',
           });
-        } catch {}
+        } catch { }
       }
     }, segundos * 1000);
   }

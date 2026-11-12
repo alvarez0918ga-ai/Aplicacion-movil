@@ -9,147 +9,160 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding notif-content">
-  <!-- Tarjeta de prueba rápida -->
-  <ion-card class="tarjeta-card">
-    <ion-card-header>
-      <ion-card-title class="titulo-seccion">
-        <ion-icon name="flask-outline"></ion-icon>
-        Comprobación de Sonido y Permisos
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p class="desc-texto">
-        Verifica que tu dispositivo tenga permisos activos y que el sonido de notificación suene correctamente.
-      </p>
-      <ion-button expand="block" color="secondary" (click)="probarNotificacion()">
-        <ion-icon slot="start" name="notifications-outline"></ion-icon>
-        Enviar notificación de prueba (3 seg)
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
-
-  <!-- Formulario de programación de recordatorios -->
-  <ion-card class="tarjeta-card">
-    <ion-card-header>
-      <ion-card-title class="titulo-seccion">
-        <ion-icon name="alarm-outline"></ion-icon>
-        Programar Recordatorio Manual
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <!-- Nombre -->
-      <ion-item lines="none" class="item-input">
-        <ion-label position="stacked">Nombre del Medicamento</ion-label>
-        <ion-input [(ngModel)]="nombreMed" placeholder="Ej. Amoxicilina"></ion-input>
-      </ion-item>
-
-      <!-- Tipo de Medicamento -->
-      <ion-item lines="none" class="item-input">
-        <ion-label position="stacked">Tipo de Medicamento</ion-label>
-        <ion-select [(ngModel)]="tipoMed" placeholder="Elige el tipo">
-          <ion-select-option *ngFor="let t of tiposMedicamento" [value]="t">
-            {{ t }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <!-- Hora de inicio -->
-      <ion-item lines="none" class="item-input">
-        <ion-label position="stacked">Hora de inicio de la primera toma</ion-label>
-        <ion-input type="time" [(ngModel)]="horaMed"></ion-input>
-      </ion-item>
-
-      <!-- Frecuencia en horas solicitadas -->
-      <ion-item lines="none" class="item-input">
-        <ion-label position="stacked">Frecuencia (cada cuántas horas)</ion-label>
-        <ion-select [(ngModel)]="frecuenciaHoras" placeholder="Selecciona frecuencia">
-          <ion-select-option *ngFor="let f of opcionesFrecuencia" [value]="f.horas">
-            {{ f.etiqueta }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <!-- Botones de frecuencia rápida -->
-      <div class="chips-frecuencia">
-        <button
-          type="button"
-          *ngFor="let f of opcionesFrecuencia"
-          class="btn-chip"
-          [class.activo]="frecuenciaHoras === f.horas"
-          (click)="seleccionarFrecuencia(f.horas)"
-        >
-          {{ f.horas }}h
-        </button>
-      </div>
-
-      <div class="banner-regla">
-        <ion-icon name="information-circle-outline"></ion-icon>
-        <span>
-          Se programarán <strong>2 notificaciones por toma</strong>: 10 minutos antes y al momento exacto de cada toma.
-        </span>
-      </div>
-
-      <ion-button
-        expand="block"
-        color="primary"
-        class="btn-programar"
-        (click)="programarRecordatorio(nombreMed, horaMed)"
-      >
-        <ion-icon slot="start" name="calendar-outline"></ion-icon>
-        Programar Notificaciones
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
-
-  <!-- Lista de notificaciones pendientes en el dispositivo -->
-  <ion-card class="tarjeta-card">
-    <ion-card-header>
-      <div class="header-pendientes">
+<ion-content class="notif-content">
+  <div class="contenedor-principal">
+    <!-- Tarjeta de prueba rápida -->
+    <ion-card class="tarjeta-card">
+      <ion-card-header>
         <ion-card-title class="titulo-seccion">
-          <ion-icon name="time-outline"></ion-icon>
-          Pendientes en Dispositivo ({{ notificacionesPendientes.length }})
+          <ion-icon name="flask-outline"></ion-icon>
+          Comprobación de Sonido y Permisos
         </ion-card-title>
-        <ion-button fill="clear" size="small" (click)="cargarPendientes()">
-          <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="desc-texto">
+          Verifica que tu dispositivo tenga permisos activos y que el sonido de notificación suene correctamente.
+        </p>
+        <ion-button expand="block" color="secondary" (click)="probarNotificacion()">
+          <ion-icon slot="start" name="notifications-outline"></ion-icon>
+          Enviar notificación de prueba (3 seg)
         </ion-button>
-      </div>
-    </ion-card-header>
+      </ion-card-content>
+    </ion-card>
 
-    <ion-card-content>
-      <div *ngIf="notificacionesPendientes.length === 0" class="sin-pendientes">
-        <ion-icon name="checkmark-circle-outline" class="icono-ok"></ion-icon>
-        <p>No hay alertas en cola en este momento.</p>
-      </div>
+    <ion-card class="tarjeta-card">
+      <ion-card-header>
+        <ion-card-title class="titulo-seccion">
+          <ion-icon name="alarm-outline"></ion-icon>
+          Programar Recordatorio Manual
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list lines="inset">
+  
+          <ion-item>
+            <ion-input
+              label="Nombre del Medicamento"
+              labelPlacement="stacked"
+              [(ngModel)]="nombreMed"
+              placeholder="Ej. Amoxicilina"
+            ></ion-input>
+          </ion-item>
 
-      <ion-list *ngIf="notificacionesPendientes.length > 0" lines="full">
-        <ion-item *ngFor="let n of notificacionesPendientes">
-          <ion-icon
-            slot="start"
-            [name]="n.title?.includes('10 minutos') ? 'hourglass-outline' : 'notifications-outline'"
-            [color]="n.title?.includes('10 minutos') ? 'warning' : 'primary'"
-          ></ion-icon>
-          <ion-label>
-            <h3>{{ n.title }}</h3>
-            <p>{{ n.body }}</p>
-            <p class="fecha-notif" *ngIf="n.schedule?.at">
-              🔔 Programada para: {{ formatearFechaNotif(n.schedule?.at) }}
-            </p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
+          <ion-item>
+            <ion-select
+              label="Tipo de Medicamento"
+              labelPlacement="stacked"
+              [(ngModel)]="tipoMed"
+              placeholder="Elige el tipo"
+            >
+              <ion-select-option *ngFor="let t of tiposMedicamento" [value]="t">
+                {{ t }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
 
-      <ion-button
-        *ngIf="notificacionesPendientes.length > 0"
-        expand="block"
-        fill="outline"
-        color="danger"
-        class="btn-borrar-todas"
-        (click)="cancelarTodas()"
-      >
-        <ion-icon slot="start" name="trash-outline"></ion-icon>
-        Cancelar todas las notificaciones
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+          <ion-item>
+            <ion-input
+              type="time"
+              label="Hora de inicio de la primera toma"
+              labelPlacement="stacked"
+              [(ngModel)]="horaMed"
+            ></ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-select
+              label="Frecuencia (cada cuántas horas)"
+              labelPlacement="stacked"
+              [(ngModel)]="frecuenciaHoras"
+              placeholder="Selecciona frecuencia"
+            >
+              <ion-select-option *ngFor="let f of opcionesFrecuencia" [value]="f.horas">
+                {{ f.etiqueta }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <div class="chips-frecuencia">
+          <ion-chip
+            *ngFor="let f of opcionesFrecuencia"
+            [outline]="frecuenciaHoras !== f.horas"
+            [color]="frecuenciaHoras === f.horas ? 'primary' : 'medium'"
+            (click)="seleccionarFrecuencia(f.horas)"
+          >
+            <ion-label>{{ f.horas }}h</ion-label>
+          </ion-chip>
+        </div>
+
+        <div class="banner-regla">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          <span>
+            Se programarán <strong>2 notificaciones por toma</strong>: 10 minutos antes y al momento exacto de cada toma.
+          </span>
+        </div>
+
+        <ion-button
+          expand="block"
+          color="primary"
+          class="btn-programar"
+          (click)="programarRecordatorio(nombreMed, horaMed)"
+        >
+          <ion-icon slot="start" name="calendar-outline"></ion-icon>
+          Programar Notificaciones
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="tarjeta-card">
+      <ion-card-header>
+        <div class="header-pendientes">
+          <ion-card-title class="titulo-seccion">
+            <ion-icon name="time-outline"></ion-icon>
+            Pendientes en Dispositivo ({{ notificacionesPendientes.length }})
+          </ion-card-title>
+          <ion-button fill="clear" size="small" (click)="cargarPendientes()">
+            <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div *ngIf="notificacionesPendientes.length === 0" class="sin-pendientes">
+          <ion-icon name="checkmark-circle-outline" class="icono-ok"></ion-icon>
+          <p>No hay alertas en cola en este momento.</p>
+        </div>
+
+        <ion-list *ngIf="notificacionesPendientes.length > 0" lines="full">
+          <ion-item *ngFor="let n of notificacionesPendientes">
+            <ion-icon
+              slot="start"
+              [name]="n.title?.includes('10 minutos') ? 'hourglass-outline' : 'notifications-outline'"
+              [color]="n.title?.includes('10 minutos') ? 'warning' : 'primary'"
+            ></ion-icon>
+            <ion-label>
+              <h3>{{ n.title }}</h3>
+              <p>{{ n.body }}</p>
+              <p class="fecha-notif" *ngIf="n.schedule?.at">
+                🔔 Programada para: {{ formatearFechaNotif(n.schedule?.at) }}
+              </p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ion-button
+          *ngIf="notificacionesPendientes.length > 0"
+          expand="block"
+          fill="outline"
+          color="danger"
+          class="btn-borrar-todas"
+          (click)="cancelarTodas()"
+        >
+          <ion-icon slot="start" name="trash-outline"></ion-icon>
+          Cancelar todas las notificaciones
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

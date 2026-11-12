@@ -87,7 +87,7 @@ export class MedicamentosService {
     },
   ];
 
-  // Lista en memoria inicializada DE INMEDIATO (síncrona) para evitar pantallas vacías o doble clic
+
   private medicamentos: Medicamento[] = this.cargarInicialSincrono();
   private medicamentos$ = new BehaviorSubject<Medicamento[]>(this.medicamentos);
 
@@ -96,7 +96,6 @@ export class MedicamentosService {
     this.sincronizarConPreferences();
   }
 
-  // Carga síncrona instantánea desde localStorage
   private cargarInicialSincrono(): Medicamento[] {
     try {
       const hoyStr = new Date().toISOString().split('T')[0];
@@ -113,7 +112,7 @@ export class MedicamentosService {
         localStorage.setItem(FECHA_HOY_KEY, hoyStr);
       }
 
-      // Si cambió el día, resetear los checkboxes para el nuevo día
+
       if (ultimaFecha !== hoyStr) {
         localStorage.setItem(FECHA_HOY_KEY, hoyStr);
         if (ultimaFecha) {
@@ -128,7 +127,7 @@ export class MedicamentosService {
     }
   }
 
-  // Sincronización en segundo plano con Preferences de Capacitor
+
   private async sincronizarConPreferences(): Promise<void> {
     try {
       const { value } = await Preferences.get({ key: STORAGE_KEY });
@@ -149,12 +148,12 @@ export class MedicamentosService {
     }
   }
 
-  // Retorna la lista inmediatamente de forma síncrona
+
   getMedicamentos(): Medicamento[] {
     return [...this.medicamentos];
   }
 
-  // Retorna las tomas de hoy de forma síncrona (solo medicamentos con tratamiento ACTIVO)
+
   getTomasDeHoy(): Medicamento[] {
     return this.medicamentos.filter((m) => !m.tratamientoTerminado);
   }
@@ -168,7 +167,7 @@ export class MedicamentosService {
     return this.medicamentos.find((m) => m.id === id);
   }
 
-  // Agregar medicamento
+
   agregarMedicamento(nuevo: Omit<Medicamento, 'id'>): Medicamento {
     const nuevoMed: Medicamento = {
       ...nuevo,
@@ -181,7 +180,6 @@ export class MedicamentosService {
     return nuevoMed;
   }
 
-  // Actualizar medicamento
   actualizarMedicamento(id: string, datos: Partial<Medicamento>): boolean {
     const index = this.medicamentos.findIndex((m) => m.id === id);
     if (index !== -1) {
@@ -195,7 +193,6 @@ export class MedicamentosService {
     return false;
   }
 
-  // Alternar estado tomado de hoy
   toggleTomado(id: string): boolean {
     const med = this.medicamentos.find((m) => m.id === id);
     if (med) {
@@ -206,7 +203,6 @@ export class MedicamentosService {
     return false;
   }
 
-  // Termina el tratamiento: ya no saldrá en las tomas de hoy, pero se conserva en el botiquín/historial
   terminarTratamiento(id: string): boolean {
     const med = this.medicamentos.find((m) => m.id === id);
     if (med) {
@@ -220,7 +216,7 @@ export class MedicamentosService {
     return false;
   }
 
-  // Reactivar tratamiento si el usuario lo necesita de nuevo
+
   reactivarTratamiento(id: string): boolean {
     const med = this.medicamentos.find((m) => m.id === id);
     if (med) {
@@ -233,7 +229,6 @@ export class MedicamentosService {
     return false;
   }
 
-  // Comprueba si ya transcurrió la duración del tratamiento establecida
   esDuracionCumplida(med: Medicamento): boolean {
     if (!med.fechaInicio || !med.duracion) return false;
     try {
@@ -255,7 +250,6 @@ export class MedicamentosService {
       );
 
       const hoy = new Date();
-      // Eliminar horas para comparar solo fechas
       hoy.setHours(0, 0, 0, 0);
       fInicio.setHours(0, 0, 0, 0);
 
@@ -266,7 +260,6 @@ export class MedicamentosService {
     }
   }
 
-  // Eliminar medicamento
   eliminarMedicamento(id: string): boolean {
     const index = this.medicamentos.findIndex((m) => m.id === id);
     if (index !== -1) {
@@ -279,17 +272,16 @@ export class MedicamentosService {
     return false;
   }
 
-  // Guarda síncronamente en localStorage y en Preferences en segundo plano
+
   private guardarYNotificar(): void {
     const copia = [...this.medicamentos];
     this.medicamentos$.next(copia);
 
-    // 1. Inmediato y síncrono (0ms)
+
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(copia));
     } catch {}
 
-    // 2. Persistencia nativa Capacitor en segundo plano
     Preferences.set({
       key: STORAGE_KEY,
       value: JSON.stringify(copia),

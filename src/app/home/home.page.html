@@ -1,23 +1,23 @@
-<ion-content class="home-content" [fullscreen]="true">
-  <header class="header-azul">
-    <div class="header-titulos">
-      <h1 class="titulo-hoy">Hoy</h1>
-      <p class="fecha-hoy">{{ fechaHoy }}</p>
-    </div>
-  </header>
+<ion-header class="ion-no-border header-azul">
+  <div class="header-titulos">
+    <h1 class="header-titulo">Hoy</h1>
+    <p class="header-subtitulo">{{ fechaHoy }}</p>
+  </div>
+</ion-header>
 
-  <div class="home-container">
+<ion-content class="home-content" [fullscreen]="true">
+  <div class="contenedor-principal">
+
     <div class="seccion-header">
       <h2 class="seccion-titulo">Tomas de hoy</h2>
       <span class="seccion-contador">{{ completadas }} de {{ medicamentos.length }} completadas</span>
     </div>
 
-    <!-- Lista de tomas pendientes del día -->
     <div class="lista-medicamentos" *ngIf="pendientes.length > 0">
-      <div class="tarjeta-med" *ngFor="let med of pendientes" (click)="toggleTomado(med)">
-
+      <ion-card class="tarjeta-med" *ngFor="let med of pendientes" (click)="toggleTomado(med)">
+        <!-- Icono o foto del medicamento -->
         <div class="icono-box" *ngIf="!med.imagenUrl">
-          <ion-icon name="medkit-outline" style="font-size: 24px; color: #2563eb;"></ion-icon>
+          <ion-icon name="medkit-outline"></ion-icon>
         </div>
         <div class="icono-box icono-box-img" *ngIf="med.imagenUrl">
           <img [src]="med.imagenUrl" [alt]="med.nombre" />
@@ -32,20 +32,23 @@
           </p>
         </div>
 
-        <button type="button" class="btn-check" (click)="toggleTomado(med); $event.stopPropagation()"
-          aria-label="Marcar como tomado">
+
+        <button
+          type="button"
+          class="btn-check"
+          (click)="toggleTomado(med); $event.stopPropagation()"
+          aria-label="Marcar como tomado"
+        >
           <ion-icon name="checkmark-outline"></ion-icon>
         </button>
-      </div>
+      </ion-card>
     </div>
 
-    <!-- Caja de todas completadas -->
     <div class="todas-completadas-box" *ngIf="pendientes.length === 0">
       <ion-icon name="checkmark-done-circle-outline"></ion-icon>
       <p>¡Excelente! Has completado todas las tomas del día.</p>
     </div>
 
-    <!-- Sección de tomas completadas del día -->
     <div class="seccion-completadas" *ngIf="completados.length > 0">
       <div class="seccion-header header-completadas">
         <h2 class="seccion-titulo">
@@ -55,8 +58,7 @@
       </div>
 
       <div class="lista-medicamentos">
-        <div class="tarjeta-med tarjeta-completada" *ngFor="let med of completados" (click)="toggleTomado(med)">
-
+        <ion-card class="tarjeta-med tarjeta-completada" *ngFor="let med of completados" (click)="toggleTomado(med)">
           <div class="tarjeta-fila-sup">
             <div class="icono-box icono-box-completado">
               <ion-icon name="checkmark-done-outline"></ion-icon>
@@ -71,65 +73,40 @@
               </p>
             </div>
 
-            <button type="button" class="btn-check completado" (click)="toggleTomado(med); $event.stopPropagation()"
-              aria-label="Desmarcar como tomado">
+            <button
+              type="button"
+              class="btn-check completado"
+              (click)="toggleTomado(med); $event.stopPropagation()"
+              aria-label="Desmarcar como tomado"
+            >
               <ion-icon name="checkmark-outline"></ion-icon>
             </button>
           </div>
 
-          <!-- Botón y estado para Terminar Tratamiento -->
           <div class="fila-terminar-tratamiento" (click)="$event.stopPropagation()">
             <div class="info-duracion">
-              <span class="badge-duracion" [class.cumplida]="duracionCumplida(med)">
+              <ion-badge [color]="duracionCumplida(med) ? 'warning' : 'light'" class="badge-duracion">
                 <ion-icon [name]="duracionCumplida(med) ? 'alert-circle-outline' : 'calendar-outline'"></ion-icon>
                 <span>{{ duracionCumplida(med) ? 'Tratamiento cumplido' : (med.duracion || 'Duración activa') }}</span>
-              </span>
+              </ion-badge>
             </div>
 
-            <button
-              type="button"
+            <ion-button
+              fill="outline"
+              size="small"
               class="btn-terminar-tratamiento"
               (click)="confirmarTerminarTratamiento(med, $event)"
               aria-label="Terminar tratamiento"
             >
-              <ion-icon name="flag-outline"></ion-icon>
-              <span>Terminar tratamiento</span>
-            </button>
+              <ion-icon slot="start" name="flag-outline"></ion-icon>
+              Terminar tratamiento
+            </ion-button>
           </div>
-
-        </div>
+        </ion-card>
       </div>
     </div>
   </div>
 </ion-content>
 
-<!-- Barra de navegación inferior -->
-<ion-footer class="ion-no-border footer-nav">
-  <nav class="nav">
-    <button type="button" class="nav-item" *ngFor="let t of tabs" [class.activo]="tabActivo === t.id"
-      [class.item-destacado]="t.tipo === 'robot'" (click)="irA(t.id)">
-      <!-- Icono estándar -->
-      <ion-icon *ngIf="t.tipo === 'icono'" [name]="t.icono"></ion-icon>
-
-      <!-- Botón circular destacado con robot (Asistente IA) -->
-      <div *ngIf="t.tipo === 'robot'" class="circulo-robot">
-        <svg class="icono-robot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="7" width="18" height="13" rx="3"></rect>
-          <path d="M12 7V3"></path>
-          <circle cx="12" cy="3" r="1" fill="currentColor"></circle>
-          <circle cx="8" cy="12" r="1.5" fill="currentColor"></circle>
-          <circle cx="16" cy="12" r="1.5" fill="currentColor"></circle>
-          <path d="M9 16h6"></path>
-          <path d="M1 12h2"></path>
-          <path d="M21 12h2"></path>
-        </svg>
-      </div>
-
-      <span class="nav-etiqueta">{{ t.etiqueta }}</span>
-    </button>
-  </nav>
-
-  <!-- Barra de inicio estilo iOS -->
-  <div class="home-bar-indicator"></div>
-</ion-footer>
+<!-- Barra de navegación inferior compartida -->
+<app-bottom-nav [tabActivo]="tabActivo"></app-bottom-nav>

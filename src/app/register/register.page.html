@@ -1,9 +1,9 @@
 <ion-content class="register-content" [fullscreen]="true">
-  <div class="register-container">
+  <div class="auth-container register-container">
 
-    <!-- Logo -->
+    <!-- Logo de la aplicación -->
     <div class="logo-recorte">
-      <img class="logo" src="assets/img/logo.png" alt="Logo de la aplicación" />
+      <img class="logo" src="assets/img/logo.png" alt="Logo de DoxiDetect" />
     </div>
 
     <form [formGroup]="registerForm" (ngSubmit)="crearCuenta()">
@@ -25,7 +25,7 @@
         Ingresa tu nombre completo
       </small>
 
-      <!-- Correo -->
+      <!-- Correo electrónico -->
       <label class="etiqueta">Correo electrónico</label>
       <div class="campo-wrap">
         <ion-icon name="mail" class="icono"></ion-icon>
@@ -78,7 +78,7 @@
     <!-- Separador -->
     <div class="separador"><span>o regístrate con</span></div>
 
-    <!-- Google -->
+    <!-- Botón Google -->
     <ion-button
       expand="block"
       type="button"
@@ -94,7 +94,7 @@
       Continuar con Google
     </ion-button>
 
-    <!-- Ir al login -->
+    <!-- Enlace a Login -->
     <p class="login-link">
       ¿Ya tienes una cuenta?
       <a (click)="irAInicioSesion()">Inicia sesión</a>

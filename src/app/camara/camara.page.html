@@ -8,98 +8,112 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="camara-content">
-  <div class="form-container">
+  <div class="contenedor-principal">
 
     <form (ngSubmit)="guardarMedicamento()">
-      <!-- Campo 1: Nombre del medicamento -->
-      <div class="campo-grupo">
-        <label class="campo-etiqueta">Nombre del medicamento</label>
-        <ion-input
-          class="custom-input"
-          type="text"
-          name="nombre"
-          [(ngModel)]="medicamento.nombre"
-          placeholder="Ej: Paracetamol"
-          required
-        ></ion-input>
-      </div>
 
-      <!-- Campo 2: Dosis / Presentación -->
-      <div class="campo-grupo">
-        <label class="campo-etiqueta">Dosis / Presentación</label>
-        <ion-input
-          class="custom-input"
-          type="text"
-          name="dosis"
-          [(ngModel)]="medicamento.dosis"
-          placeholder="Ej: 500 mg · 1 tableta"
-        ></ion-input>
-      </div>
+      <ion-card class="form-card">
+        <ion-card-header>
+          <ion-card-title>Información del Medicamento</ion-card-title>
+        </ion-card-header>
 
-      <!-- Campo 3: Hora de la toma -->
-      <div class="campo-grupo">
-        <label class="campo-etiqueta">Hora de la toma</label>
-        <ion-input
-          class="custom-input"
-          type="time"
-          name="hora"
-          [(ngModel)]="medicamento.hora"
-        ></ion-input>
-      </div>
+        <ion-card-content>
+          <ion-list lines="inset">
+            <!-- 1. Nombre -->
+            <ion-item>
+              <ion-input
+                type="text"
+                name="nombre"
+                label="Nombre del medicamento *"
+                labelPlacement="stacked"
+                [(ngModel)]="medicamento.nombre"
+                placeholder="Ej: Paracetamol"
+                required
+              ></ion-input>
+            </ion-item>
 
-      <!-- Campo 4: Recomendaciones -->
-      <div class="campo-grupo">
-        <label class="campo-etiqueta">Recomendaciones (opcional)</label>
-        <ion-textarea
-          class="custom-textarea"
-          name="notas"
-          [(ngModel)]="medicamento.notas"
-          placeholder="Ej: Tomar con un vaso de agua después de los alimentos..."
-          [autoGrow]="true"
-          rows="3"
-        ></ion-textarea>
-      </div>
+      
+            <ion-item>
+              <ion-input
+                type="text"
+                name="dosis"
+                label="Dosis / Presentación"
+                labelPlacement="stacked"
+                [(ngModel)]="medicamento.dosis"
+                placeholder="Ej: 500 mg · 1 tableta"
+              ></ion-input>
+            </ion-item>
 
-      <!-- Sección de Foto / Escaneo -->
-      <div class="campo-grupo">
-        <label class="campo-etiqueta">Foto del medicamento</label>
+            <ion-item>
+              <ion-input
+                type="time"
+                name="hora"
+                label="Hora de la toma"
+                labelPlacement="stacked"
+                [(ngModel)]="medicamento.hora"
+              ></ion-input>
+            </ion-item>
 
-        <!-- Cuando YA hay una foto tomada o subida -->
-        <div class="preview-box" *ngIf="imagenUrl">
-          <ion-img [src]="imagenUrl" alt="Foto del medicamento"></ion-img>
-          <div class="acciones-foto">
-            <ion-button size="small" fill="outline" (click)="escanearMedicamento()">
-              <ion-icon slot="start" name="camera-outline"></ion-icon>
-              Repetir foto
-            </ion-button>
-            <ion-button size="small" fill="outline" (click)="subirDesdeGaleria()">
-              <ion-icon slot="start" name="image-outline"></ion-icon>
-              Cambiar
-            </ion-button>
-            <ion-button size="small" color="danger" fill="clear" (click)="eliminarFoto()">
-              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-            </ion-button>
+            <ion-item lines="none">
+              <ion-textarea
+                name="notas"
+                label="Recomendaciones (opcional)"
+                labelPlacement="stacked"
+                [(ngModel)]="medicamento.notas"
+                placeholder="Ej: Tomar con un vaso de agua después de los alimentos..."
+                [autoGrow]="true"
+                rows="3"
+              ></ion-textarea>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="foto-card">
+        <ion-card-header>
+          <ion-card-title>Foto del medicamento</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <div class="preview-box" *ngIf="imagenUrl">
+            <ion-img [src]="imagenUrl" alt="Foto del medicamento"></ion-img>
+            <div class="acciones-foto">
+              <ion-button size="small" fill="outline" (click)="escanearMedicamento()">
+                <ion-icon slot="start" name="camera-outline"></ion-icon>
+                Repetir foto
+              </ion-button>
+              <ion-button size="small" fill="outline" (click)="subirDesdeGaleria()">
+                <ion-icon slot="start" name="image-outline"></ion-icon>
+                Cambiar
+              </ion-button>
+              <ion-button size="small" color="danger" fill="clear" (click)="eliminarFoto()">
+                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+              </ion-button>
+            </div>
           </div>
-        </div>
 
-        <!-- Cuando NO hay foto: botones para tomarla o subirla -->
-        <div class="foto-placeholder" *ngIf="!imagenUrl">
-          <p class="foto-texto">Agrega una imagen para identificar tu medicamento</p>
-          <div class="botones-foto">
-            <ion-button expand="block" (click)="escanearMedicamento()">
-              <ion-icon slot="start" name="camera-outline"></ion-icon>
-              Tomar foto
-            </ion-button>
-            <ion-button expand="block" fill="outline" (click)="subirDesdeGaleria()">
-              <ion-icon slot="start" name="image-outline"></ion-icon>
-              Subir de galería
-            </ion-button>
+          <div class="foto-placeholder" *ngIf="!imagenUrl">
+            <ion-icon name="image-outline" class="icono-placeholder"></ion-icon>
+            <p class="foto-texto">Agrega una imagen para identificar tu medicamento</p>
+            <ion-row>
+              <ion-col size="6">
+                <ion-button expand="block" (click)="escanearMedicamento()">
+                  <ion-icon slot="start" name="camera-outline"></ion-icon>
+                  Tomar foto
+                </ion-button>
+              </ion-col>
+              <ion-col size="6">
+                <ion-button expand="block" fill="outline" (click)="subirDesdeGaleria()">
+                  <ion-icon slot="start" name="image-outline"></ion-icon>
+                  Galería
+                </ion-button>
+              </ion-col>
+            </ion-row>
           </div>
-        </div>
-      </div>
+        </ion-card-content>
+      </ion-card>
 
-      <!-- Botón principal de guardado -->
-      <ion-button expand="block" type="submit" class="btn-guardar">
+      <ion-button expand="block" type="submit" size="large" color="primary" class="btn-guardar">
         <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
         Guardar medicamento
       </ion-button>
