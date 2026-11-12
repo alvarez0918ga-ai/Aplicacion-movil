@@ -1,3 +1,6 @@
+/* Estilos compartidos para la barra de navegación inferior de la app */
+@use './theme/shared-nav';
+
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -34,4 +37,7 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+/* @import "@ionic/angular/css/palettes/dark.system.css"; */
+
+
+

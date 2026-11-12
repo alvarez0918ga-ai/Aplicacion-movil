@@ -1,0 +1,203 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Nuevo Medicamento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding registro-content">
+  <form (ngSubmit)="guardarMedicamento()">
+    <ion-card class="form-card">
+      <ion-card-header>
+        <ion-card-title>Datos del Medicamento</ion-card-title>
+        <ion-card-subtitle>Completa los datos para calcular tus recordatorios</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-list lines="inset">
+          <!-- 1. Nombre -->
+          <ion-item>
+            <ion-input
+              label="Nombre del medicamento *"
+              labelPlacement="stacked"
+              [(ngModel)]="medicamento.nombre"
+              name="nombre"
+              placeholder="Ej. Paracetamol"
+              required
+            ></ion-input>
+          </ion-item>
+
+          <!-- 2. Tipo de medicamento -->
+          <ion-item>
+            <ion-select
+              label="Tipo de medicamento *"
+              labelPlacement="stacked"
+              [(ngModel)]="medicamento.tipo"
+              (ionChange)="seleccionarTipo($event.detail.value)"
+              name="tipo"
+              placeholder="-- Elige el tipo --"
+            >
+              <ion-select-option *ngFor="let t of tiposMedicamento" [value]="t">
+                {{ t }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <!-- Si eligen 'Otro' -->
+          <ion-item *ngIf="medicamento.tipo === 'Otro'">
+            <ion-input
+              label="Especifica el tipo"
+              labelPlacement="stacked"
+              [(ngModel)]="tipoPersonalizado"
+              name="tipoPersonalizado"
+              placeholder="Ej. Supositorio, Parche..."
+            ></ion-input>
+          </ion-item>
+
+          <!-- 3. Dosis -->
+          <ion-item>
+            <ion-input
+              label="Dosis"
+              labelPlacement="stacked"
+              [(ngModel)]="medicamento.dosis"
+              name="dosis"
+              placeholder="Ej. 1 tableta / 500 mg"
+            ></ion-input>
+          </ion-item>
+
+          <!-- 4. Fecha de inicio -->
+          <ion-item>
+            <ion-input
+              type="date"
+              label="Fecha de inicio"
+              labelPlacement="stacked"
+              [(ngModel)]="medicamento.fechaInicio"
+              (ionChange)="alCambiarFechaInicio()"
+              name="fechaInicio"
+            ></ion-input>
+          </ion-item>
+
+          <!-- 5. Hora de toma -->
+          <ion-item>
+            <ion-input
+              type="time"
+              label="Hora de toma *"
+              labelPlacement="stacked"
+              [(ngModel)]="medicamento.horaInicio"
+              (ionChange)="alCambiarHoraInicio()"
+              name="horaInicio"
+              required
+            ></ion-input>
+          </ion-item>
+
+          <!-- 6. Frecuencia -->
+          <ion-item>
+            <ion-select
+              label="Frecuencia del medicamento *"
+              labelPlacement="stacked"
+              [(ngModel)]="frecuenciaHorasSeleccionada"
+              (ionChange)="seleccionarFrecuencia($event.detail.value)"
+              name="frecuencia"
+              placeholder="-- Elige cada cuántas horas --"
+            >
+              <ion-select-option *ngFor="let f of opcionesFrecuencia" [value]="f.horas">
+                {{ f.etiqueta }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <!-- 7. Duración -->
+          <ion-item>
+            <ion-input
+              label="Duración del tratamiento"
+              labelPlacement="stacked"
+              [(ngModel)]="medicamento.duracion"
+              name="duracion"
+              placeholder="Ej. 7 días, 2 semanas..."
+            ></ion-input>
+          </ion-item>
+
+          <!-- 8. Cantidad inicial -->
+          <ion-item>
+            <ion-input
+              type="number"
+              label="Cantidad inicial en botiquín"
+              labelPlacement="stacked"
+              [(ngModel)]="medicamento.cantidadInicial"
+              name="cantidadInicial"
+              placeholder="Ej. 20 (tabletas o unidades)"
+            ></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Card de información de notificaciones automáticas calculadas -->
+    <ion-card *ngIf="frecuenciaHorasSeleccionada && medicamento.horaInicio" color="light" class="info-card">
+      <ion-card-header>
+        <ion-card-title class="titulo-notif">
+          <ion-icon name="notifications-outline"></ion-icon>
+          Recordatorios automáticos calculados
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="desc-notif">
+          Recibirás <strong>2 notificaciones por toma</strong>:
+          <br>• <strong>10 minutos antes</strong> para prepararte.
+          <br>• Al <strong>momento exacto</strong> de la toma.
+        </p>
+
+        <div *ngIf="proximasTomasPreview.length > 0" class="tomas-box">
+          <span class="label-tomas">Próximos horarios calculados:</span>
+          <div class="badges-horarios">
+            <ion-badge color="primary" *ngFor="let h of proximasTomasPreview">{{ h }}</ion-badge>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Card de Foto del Medicamento (Base64) -->
+    <ion-card class="foto-card">
+      <ion-card-header>
+        <ion-card-title style="font-size: 15px;">Foto del medicamento (opcional)</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngIf="medicamento.imagenUrl" class="foto-preview-box">
+          <ion-img [src]="medicamento.imagenUrl" alt="Foto del medicamento"></ion-img>
+          <ion-button fill="clear" color="danger" size="small" (click)="eliminarFoto()">
+            <ion-icon slot="start" name="trash-outline"></ion-icon>
+            Eliminar foto
+          </ion-button>
+        </div>
+
+        <div *ngIf="!medicamento.imagenUrl" class="foto-placeholder-box">
+          <ion-icon name="camera-outline" class="icono-camara-grande"></ion-icon>
+          <p>Toma o selecciona una foto de la caja</p>
+        </div>
+
+        <ion-row class="ion-margin-top">
+          <ion-col size="6">
+            <ion-button expand="block" (click)="tomarFoto()">
+              <ion-icon slot="start" name="camera-outline"></ion-icon>
+              Tomar foto
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button expand="block" fill="outline" (click)="subirDeGaleria()">
+              <ion-icon slot="start" name="image-outline"></ion-icon>
+              Galería
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Botón Principal Guardar -->
+    <ion-button expand="block" type="submit" size="large" color="primary" class="btn-guardar">
+      <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+      Guardar Medicamento y Activar Alertas
+    </ion-button>
+  </form>
+</ion-content>

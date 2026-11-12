@@ -1,143 +1,325 @@
 .home-content {
-  --background: #ffffff;
+  --background: #f8fafc;
 }
 
-.home-container {
-  font-size: clamp(14px, 2.2vmin + 8px, 22px);
-  width: min(100%, 30em);
-  min-height: 100%;
-  margin: 0 auto;
-  box-sizing: border-box;
-  padding-top: calc(env(safe-area-inset-top) + 1.2em);
-  padding-bottom: 1.5em;
-  padding-left: 1.5em;
-  padding-right: 1.5em;
+// Cabecera Azul Superior
+.header-azul {
+  background: #2563eb;
+  padding: calc(env(safe-area-inset-top) + 16px) 20px 22px 20px;
 }
 
-// Cabecera superior
-.encabezado-superior {
+.header-fila {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.2em;
+}
 
-  .saludo-info {
-    .titulo-hola {
-      font-size: 1.4em;
-      font-weight: 800;
-      color: #0d2322;
-      margin: 0 0 0.15em 0;
-    }
-    .fecha-actual {
-      font-size: 0.85em;
-      color: #64748b;
-      margin: 0;
-      font-weight: 500;
-    }
-  }
+.header-titulos {
+  display: flex;
+  flex-direction: column;
+}
 
-  .acciones-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
+.titulo-hoy {
+  font-size: 28px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.15;
+}
 
-    .avatar-usuario {
-      width: 2.5em;
-      height: 2.5em;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 1px solid #cbd5e1;
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
+.fecha-hoy {
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 4px 0 0 0;
+  font-weight: 400;
 
-    .btn-notif {
-      --color: #0d2322;
-      font-size: 1.2em;
-    }
+  &::first-letter {
+    text-transform: uppercase;
   }
 }
 
-// Título de sección
+// Contenedor de Tomas
+.home-container {
+  padding: 18px 16px 24px 16px;
+  max-width: 520px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+// Subtítulo de sección
+.seccion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 14px;
+  padding: 0 2px;
+}
+
 .seccion-titulo {
-  font-size: 1.1em;
-  font-weight: 700;
-  color: #0d4745;
-  text-align: center;
-  margin: 0 0 1em 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
 }
 
-// Tarjeta vacía: Sin medicamentos
-.tarjeta-vacia {
+.seccion-contador {
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+}
+
+// Tarjetas de medicamentos
+.lista-medicamentos {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tarjeta-med {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 13px 15px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: transform 0.12s ease;
+
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+.icono-box {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 13px;
+  background: #eff6ff;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  min-height: 22em;
-  border: 1.5px dashed #cbd5e1;
-  background: #ffffff;
-  border-radius: 1.2em;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  padding: 1.5em;
-  box-sizing: border-box;
 
-  .contenido-vacio {
-    .icono-vacio {
-      font-size: 3.5em;
-      color: #94a3b8;
-      margin-bottom: 0.4em;
+  .icono-capsula {
+    width: 24px;
+    height: 24px;
+    color: #2563eb;
+    transform: rotate(-10deg);
+  }
+}
+
+.med-info {
+  flex: 1;
+  min-width: 0;
+
+  .med-nombre {
+    font-size: 15.5px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 2px 0;
+  }
+
+  .med-dosis {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0 0 4px 0;
+  }
+
+  .med-hora {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #2563eb;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    ion-icon {
+      font-size: 14px;
     }
 
-    .titulo-vacio {
-      margin: 0 0 0.3em 0;
-      font-size: 1.2em;
-      font-weight: 700;
-      color: #0f172a;
-    }
-
-    .sub-vacio {
-      font-size: 0.85em;
-      color: #64748b;
-      line-height: 1.4;
+    &.tomado {
+      color: #16a34a;
     }
   }
 }
 
-// Barra de navegación inferior
-.nav {
-  font-size: clamp(12px, 1.6vmin + 6px, 18px);
+// Botón circular de Check
+.btn-check {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1.5px solid #cbd5e1;
+  color: #94a3b8;
   display: flex;
-  justify-content: space-around;
-  background: #ffffff;
-  border-top: 1px solid #f1f5f9;
-  padding: 0.5em 0.3em calc(env(safe-area-inset-bottom) + 0.5em);
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  ion-icon {
+    font-size: 20px;
+  }
+
+  &.completado {
+    background: #16a34a;
+    border-color: #16a34a;
+    color: #ffffff;
+  }
 }
 
-.nav-item {
-  flex: 1;
+// ─── Mensaje de todas completadas ─────────────────────────────────
+.todas-completadas-box {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px 16px;
+  text-align: center;
+  border: 1px dashed #cbd5e1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.2em;
-  padding: 0.3em 0;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: #94a3b8;
+  gap: 8px;
+  margin-bottom: 20px;
 
   ion-icon {
-    font-size: 1.6em;
+    font-size: 38px;
+    color: #16a34a;
   }
 
-  span {
-    font-size: 0.75em;
+  p {
+    margin: 0;
+    font-size: 14px;
     font-weight: 600;
-  }
-
-  &.activo {
-    color: #0d9488;
+    color: #475569;
   }
 }
+
+// ─── Apartado inferior de completadas ─────────────────────────────
+.seccion-completadas {
+  margin-top: 24px;
+  padding-top: 14px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.header-completadas {
+  margin-bottom: 10px;
+
+  .completadas-titulo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #475569;
+  }
+
+  .icono-check-seccion {
+    color: #16a34a;
+    font-size: 18px;
+  }
+}
+
+.tarjeta-completada {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  padding: 12px 14px;
+
+  &:hover {
+    border-color: #cbd5e1;
+  }
+}
+
+.tarjeta-fila-sup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.fila-terminar-tratamiento {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 9px;
+  border-top: 1px dashed #e2e8f0;
+  width: 100%;
+}
+
+.info-duracion {
+  display: flex;
+  align-items: center;
+}
+
+.badge-duracion {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: #f1f5f9;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  ion-icon {
+    font-size: 13px;
+  }
+
+  &.cumplida {
+    background: #fef3c7;
+    color: #b45309;
+    border: 1px solid #fde68a;
+  }
+}
+
+.btn-terminar-tratamiento {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease-in-out;
+
+  ion-icon {
+    font-size: 15px;
+  }
+
+  &:hover {
+    background: #dbeafe;
+    color: #1e40af;
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.icono-box-completado {
+  background: #dcfce7 !important;
+  color: #16a34a !important;
+
+  ion-icon {
+    font-size: 24px;
+  }
+}
+
+.med-nombre-completado {
+  color: #64748b !important;
+  text-decoration: line-through;
+}
+
+// Barra de navegación inferior (.footer-nav, .nav, .nav-item, etc.)
+// proviene del archivo global compartido src/theme/shared-nav.scss

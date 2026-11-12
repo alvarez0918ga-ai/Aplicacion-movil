@@ -4,7 +4,7 @@
 
 // Medida base: todo está en "em" y escala con esta línea
 .register-container {
-  font-size: clamp(14px, 2.2vmin + 12px, 24px);
+  font-size: clamp(14px, 2.2vmin + 8px, 22px);
 
   width: min(100%, 26em);
   min-height: 100%;

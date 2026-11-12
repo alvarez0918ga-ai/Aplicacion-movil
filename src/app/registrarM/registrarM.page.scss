@@ -1,0 +1,97 @@
+.registro-content {
+  --background: #f4f6f8;
+}
+
+.form-card {
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 16px;
+  background: #ffffff;
+  --background: #ffffff;
+  color: #0f172a;
+
+  ion-card-title {
+    color: #0f172a;
+    font-weight: 700;
+  }
+
+  ion-card-subtitle {
+    color: #64748b;
+  }
+
+  ion-list {
+    --background: #ffffff;
+    background: #ffffff;
+  }
+
+  ion-item {
+    --background: #ffffff;
+    --color: #0f172a;
+    background: #ffffff;
+    color: #0f172a;
+
+    ion-input,
+    ion-select {
+      --color: #0f172a;
+      --placeholder-color: #64748b;
+      color: #0f172a;
+    }
+  }
+}
+
+.foto-card {
+  border-radius: 14px;
+  margin-bottom: 20px;
+  background: #ffffff;
+  --background: #ffffff;
+  color: #0f172a;
+
+  ion-card-title {
+    color: #0f172a;
+    font-weight: 700;
+  }
+}
+
+.foto-placeholder-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  text-align: center;
+  color: #64748b;
+
+  .icono-camara-grande {
+    font-size: 40px;
+    color: #94a3b8;
+    margin-bottom: 6px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 13px;
+  }
+}
+
+.foto-preview-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  ion-img {
+    max-height: 220px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+}
+
+.btn-guardar {
+  margin: 16px 0 32px 0;
+  font-weight: 700;
+}

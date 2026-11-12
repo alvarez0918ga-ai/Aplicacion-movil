@@ -1,0 +1,100 @@
+// ─── Barra de navegación inferior global y compartida ─────────────────────────
+.footer-nav {
+  background: #ffffff;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 6px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding: 2px 8px 4px 8px;
+}
+
+.nav-item {
+  flex: 1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: #64748b;
+  padding: 4px 2px;
+  transition: color 0.15s ease;
+
+  ion-icon {
+    font-size: 22px;
+  }
+
+  .icono-nav-capsula {
+    width: 22px;
+    height: 22px;
+    transform: rotate(-10deg);
+  }
+
+  .nav-etiqueta {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: -0.1px;
+  }
+
+  &.activo {
+    color: #2563eb;
+
+    .nav-etiqueta {
+      color: #2563eb;
+      font-weight: 700;
+    }
+  }
+
+  // Botón circular destacado con robot (Asistente IA)
+  &.item-destacado {
+    gap: 2px;
+
+    .circulo-robot {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.32);
+      transition: transform 0.15s ease;
+
+      .icono-robot {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    &:active .circulo-robot {
+      transform: scale(0.94);
+    }
+
+    .nav-etiqueta {
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    &.activo .circulo-robot {
+      background: #1d4ed8;
+      box-shadow: 0 4px 12px rgba(29, 78, 216, 0.45);
+    }
+  }
+}
+
+// Indicador Home estilo barra inferior (iOS / Android)
+.home-bar-indicator {
+  width: 130px;
+  height: 4px;
+  background: #0f172a;
+  border-radius: 100px;
+  margin: 8px auto calc(env(safe-area-inset-bottom) + 6px) auto;
+}
+

@@ -1,0 +1,245 @@
+<ion-header class="ion-no-border header-botiquin">
+  <div class="header-azul">
+    <div class="header-fila">
+      <div>
+        <h1 class="titulo-botiquin">Mi Botiquín</h1>
+        <p class="subtitulo-botiquin">{{ medicamentos.length }} medicamentos registrados</p>
+      </div>
+      <button
+        type="button"
+        class="btn-agregar-rapido"
+        (click)="abrirRegistro()"
+        aria-label="Registrar nuevo medicamento"
+      >
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </div>
+
+    <!-- Barra de búsqueda superior -->
+    <div class="searchbar-wrapper">
+      <ion-searchbar
+        [(ngModel)]="busqueda"
+        (ionInput)="filtrarMedicamentos()"
+        placeholder="Buscar medicamento por nombre o tipo..."
+        animated="true"
+        show-clear-button="focus"
+        class="searchbar-custom"
+      ></ion-searchbar>
+
+      <!-- Segmento de Filtros: Todos / Activos / Historial -->
+      <div class="segmento-historial">
+        <button
+          type="button"
+          class="btn-segmento"
+          [class.activo]="filtroEstado === 'todos'"
+          (click)="cambiarFiltro('todos')"
+        >
+          Todos ({{ medicamentos.length }})
+        </button>
+        <button
+          type="button"
+          class="btn-segmento"
+          [class.activo]="filtroEstado === 'activos'"
+          (click)="cambiarFiltro('activos')"
+        >
+          Activos
+        </button>
+        <button
+          type="button"
+          class="btn-segmento"
+          [class.activo]="filtroEstado === 'finalizados'"
+          (click)="cambiarFiltro('finalizados')"
+        >
+          Historial
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-header>
+
+<ion-content class="medicamentos-content" [fullscreen]="true">
+  <!-- Botón flotante (+) según especificación de Ionic FAB -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="fab-flotante">
+    <ion-fab-button (click)="abrirRegistro()" aria-label="Registrar nuevo medicamento">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div class="contenedor-medicamentos">
+    <!-- Subtítulo de lista -->
+    <div class="seccion-info">
+      <span class="seccion-label">Lista de medicamentos guardados</span>
+      <span class="seccion-conteo">
+        Mostrando {{ medicamentosFiltrados.length }} de {{ medicamentos.length }}
+      </span>
+    </div>
+
+    <!-- Estado vacío si la búsqueda no arroja resultados -->
+    <div *ngIf="medicamentosFiltrados.length === 0" class="estado-vacio">
+      <div class="vacio-icono-box">
+        <ion-icon name="search-outline"></ion-icon>
+      </div>
+      <h3 class="vacio-titulo">No se encontraron medicamentos</h3>
+      <p class="vacio-subtitulo" *ngIf="busqueda">
+        No hay coincidencias para "{{ busqueda }}". Intenta con otro término.
+      </p>
+      <p class="vacio-subtitulo" *ngIf="!busqueda">
+        Aún no has registrado ningún medicamento en tu botiquín.
+      </p>
+      <button type="button" class="btn-vacio-agregar" (click)="abrirRegistro()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <span>Registrar medicamento</span>
+      </button>
+    </div>
+
+    <!-- Lista de medicamentos con ion-list y ion-item-sliding de Ionic -->
+    <ion-list *ngIf="medicamentosFiltrados.length > 0" class="lista-botiquin" lines="none">
+      <ion-item-sliding *ngFor="let med of medicamentosFiltrados" class="sliding-card">
+        <ion-item class="item-tarjeta">
+          <!-- Espacio dedicado para la foto del medicamento -->
+          <div class="foto-columna" slot="start">
+            <div *ngIf="med.imagenUrl" class="foto-preview">
+              <img [src]="med.imagenUrl" [alt]="med.nombre" />
+            </div>
+            <!-- Espacio reservado para que el usuario coloque la foto -->
+            <div *ngIf="!med.imagenUrl" class="foto-slot-vacio">
+              <ion-icon name="image-outline"></ion-icon>
+              <span class="label-slot-foto">Foto</span>
+            </div>
+          </div>
+
+          <!-- Información completa del medicamento -->
+          <div class="info-columna">
+            <div class="fila-superior">
+              <h2 class="med-nombre">{{ med.nombre }}</h2>
+              <!-- Indicador de estado: Finalizado (Historial) o Stock restante -->
+              <ion-badge *ngIf="med.tratamientoTerminado" color="medium" class="badge-stock badge-finalizado">
+                Historial (Finalizado)
+              </ion-badge>
+              <ion-badge *ngIf="!med.tratamientoTerminado" [color]="getColorStock(med.stockRestante)" class="badge-stock">
+                {{ med.stockRestante }} restantes
+              </ion-badge>
+            </div>
+
+            <p class="med-dosis">
+              <strong>Dosis:</strong> {{ med.dosis }}
+            </p>
+
+            <div class="detalles-grid">
+              <span class="detalle-item">
+                <ion-icon name="repeat-outline"></ion-icon>
+                <span>{{ med.frecuencia }}</span>
+              </span>
+              <span class="detalle-item">
+                <ion-icon name="calendar-outline"></ion-icon>
+                <span>Inicio: {{ formatearFecha(med.fechaInicio) }}</span>
+              </span>
+              <span class="detalle-item">
+                <ion-icon name="hourglass-outline"></ion-icon>
+                <span>Duración: {{ med.duracion }}</span>
+              </span>
+            </div>
+
+            <!-- Botones de acción rápida: Reactivar/Terminar, Editar y Eliminar -->
+            <div class="fila-acciones">
+              <!-- Si está finalizado, permitir reactivar -->
+              <button
+                *ngIf="med.tratamientoTerminado"
+                type="button"
+                class="btn-accion btn-reactivar"
+                (click)="reactivarTratamiento(med); $event.stopPropagation()"
+                aria-label="Reactivar tratamiento"
+              >
+                <ion-icon name="refresh-outline"></ion-icon>
+                <span>Reactivar</span>
+              </button>
+
+              <!-- Si está activo, permitir terminar tratamiento -->
+              <button
+                *ngIf="!med.tratamientoTerminado"
+                type="button"
+                class="btn-accion btn-finalizar"
+                (click)="terminarTratamiento(med); $event.stopPropagation()"
+                aria-label="Terminar tratamiento"
+              >
+                <ion-icon name="flag-outline"></ion-icon>
+                <span>Finalizar</span>
+              </button>
+
+              <button
+                type="button"
+                class="btn-accion btn-editar"
+                (click)="editarMedicamento(med); $event.stopPropagation()"
+                aria-label="Editar medicamento"
+              >
+                <ion-icon name="create-outline"></ion-icon>
+                <span>Editar</span>
+              </button>
+              <button
+                type="button"
+                class="btn-accion btn-eliminar"
+                (click)="confirmarEliminar(med); $event.stopPropagation()"
+                aria-label="Eliminar medicamento"
+              >
+                <ion-icon name="trash-outline"></ion-icon>
+                <span>Eliminar</span>
+              </button>
+            </div>
+          </div>
+        </ion-item>
+
+        <!-- Opciones de deslizamiento (Ionic deslizable lateral) -->
+        <ion-item-options side="end">
+          <ion-item-option *ngIf="med.tratamientoTerminado" color="success" (click)="reactivarTratamiento(med)">
+            <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+          </ion-item-option>
+          <ion-item-option *ngIf="!med.tratamientoTerminado" color="warning" (click)="terminarTratamiento(med)">
+            <ion-icon slot="icon-only" name="flag-outline"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="primary" (click)="editarMedicamento(med)">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="danger" (click)="confirmarEliminar(med)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+</ion-content>
+
+<!-- Barra de navegación inferior con los 4 tabs, incluido el Asistente IA destacado -->
+<ion-footer class="ion-no-border footer-nav">
+  <nav class="nav">
+    <button
+      type="button"
+      class="nav-item"
+      *ngFor="let t of tabs"
+      [class.activo]="tabActivo === t.id"
+      [class.item-destacado]="t.tipo === 'robot'"
+      (click)="irA(t.id)"
+    >
+      <!-- Icono estándar -->
+      <ion-icon *ngIf="t.tipo === 'icono'" [name]="t.icono"></ion-icon>
+
+      <!-- Botón circular destacado con robot (Asistente IA) -->
+      <div *ngIf="t.tipo === 'robot'" class="circulo-robot">
+        <svg class="icono-robot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="7" width="18" height="13" rx="3"></rect>
+          <path d="M12 7V3"></path>
+          <circle cx="12" cy="3" r="1" fill="currentColor"></circle>
+          <circle cx="8" cy="12" r="1.5" fill="currentColor"></circle>
+          <circle cx="16" cy="12" r="1.5" fill="currentColor"></circle>
+          <path d="M9 16h6"></path>
+          <path d="M1 12h2"></path>
+          <path d="M21 12h2"></path>
+        </svg>
+      </div>
+
+      <span class="nav-etiqueta">{{ t.etiqueta }}</span>
+    </button>
+  </nav>
+
+  <div class="home-bar-indicator"></div>
+</ion-footer>
+
